@@ -112,7 +112,8 @@ QModem 使用或参考了 5G-Modem-Support、luci-app-4gmodem、sms_tool、gl-mo
 This branch is trimmed for the CPE1250S board:
 
 - Only Quectel RG200U-CN is kept in `modem_support.json` and `modem_port_rule.json`.
-- USB preset is ECM (`usb0`); PCIe scan and PCIe preset are disabled.
+- USB preset is ECM (`usb0`); PCIe scan and PCIe preset are disabled. All four
+  RG200U modes (ecm/mbim/rndis/ncm) remain selectable.
 - `ttyUSB2` (USB interface 4) is preferred as the AT management port;
   set `qmodem.main.at_only_usb2=1` to force this behavior.
 - uqmi/umbim are not used; the SDK selects the `qmodem` and `luci-app-qmodem-next` packages.
