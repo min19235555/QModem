@@ -36,14 +36,14 @@ define Build/Prepare
 endef
 
 define Build/Compile
-	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror \
+	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror -Wno-error=sign-compare \
 		-o $(PKG_BUILD_DIR)/qmodem_voip_control $(PKG_BUILD_DIR)/voice_control.c \
 		$(TARGET_LDFLAGS) -lubus -lubox -lblobmsg_json -luci
-	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror \
+	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror -Wno-error=sign-compare \
 		-I$(STAGING_DIR)/usr/include \
 		-o $(PKG_BUILD_DIR)/qmodem_voip_adb_unlock \
 		$(PKG_BUILD_DIR)/adb_unlock.c $(TARGET_LDFLAGS) -lcrypt
-	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror \
+	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) -std=gnu11 -Wall -Wextra -Werror -Wno-error=sign-compare \
 		-I$(STAGING_DIR)/usr/include \
 		-o $(PKG_BUILD_DIR)/qmodem_voip \
 		$(PKG_BUILD_DIR)/main.c $(PKG_BUILD_DIR)/daemon_core.c \

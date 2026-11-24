@@ -1,7 +1,7 @@
 NDK_BUILD:=/home/aaron/share-aaron-1/android-ndk-r10e/ndk-build
 SRC=firehose_protocol.c  qfirehose.c  sahara.c usb_linux.c stream_download_protocol.c md5.c usb2tcp.c 
 
-CFLAGS += -Wall -Wextra -Werror -g #-s
+CFLAGS += -Wall -Wextra -Werror -Wno-error=sign-compare -g #-s
 # Allow incompatible-pointer-types, unused-result, and stringop-overflow warnings for vendor code compatibility
 CFLAGS += -Wno-error=incompatible-pointer-types -Wno-error=unused-result -Wno-error=stringop-overflow
 LDFLAGS += -lpthread -ldl

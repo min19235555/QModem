@@ -467,7 +467,7 @@ static int sync_modem(const char *section, const char *trigger, int *imported,
                   !json_object_object_get_ex(root, "received", &messages)) ||
         !json_object_is_type(messages, json_type_array))
         goto out;
-    for (size_t i = 0; i < json_object_array_length(messages); i++) {
+    for (int i = 0; i < json_object_array_length(messages); i++) {
         struct json_object *entry = json_object_array_get_idx(messages, i);
         struct json_object *field;
         sms_segment_t segment = { .modem_id = section, .storage = cfg.storage,

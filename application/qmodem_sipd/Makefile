@@ -36,7 +36,7 @@ define Build/Compile
 	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) \
 		-DPJ_AUTOCONF=1 -DPJ_IS_BIG_ENDIAN=0 -DPJ_IS_LITTLE_ENDIAN=1 \
 		-I$(STAGING_DIR)/usr/include \
-		-Wall -Wextra -Werror -std=gnu11 \
+		-Wall -Wextra -Werror -Wno-error=sign-compare -std=gnu11 \
 		-o $(PKG_BUILD_DIR)/qmodem_voip_sip_consumer \
 		$(PKG_BUILD_DIR)/sip_consumer.c $(PKG_BUILD_DIR)/sip_gateway.c \
 		$(PKG_BUILD_DIR)/sip_activation.c $(PKG_BUILD_DIR)/sip_registration.c \
@@ -45,7 +45,7 @@ define Build/Compile
 		-lpjsip -lpjsip-ua -lpjlib-util -lpj -lsoxr -lasound \
 		-lubus -lubox -lblobmsg_json -ljson-c -lcrypto -lm
 	$(TARGET_CC) $(TARGET_CPPFLAGS) $(TARGET_CFLAGS) \
-		-I$(STAGING_DIR)/usr/include -Wall -Wextra -Werror -std=gnu11 \
+		-I$(STAGING_DIR)/usr/include -Wall -Wextra -Werror -Wno-error=sign-compare -std=gnu11 \
 		-o $(PKG_BUILD_DIR)/qmodem_voip_sipd \
 		$(PKG_BUILD_DIR)/sip_control.c $(PKG_BUILD_DIR)/sip_credentials.c \
 		$(PKG_BUILD_DIR)/sip_gateway.c $(TARGET_LDFLAGS) \

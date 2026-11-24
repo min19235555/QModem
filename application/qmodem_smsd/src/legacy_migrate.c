@@ -97,7 +97,7 @@ static int migrate_file(sms_db_t *db, const char *path, const char *modem_id,
         goto out;
     if (exec_sql(db->sql, "BEGIN IMMEDIATE") != 0)
         goto out;
-    for (size_t i = 0; i < json_object_array_length(array); i++) {
+    for (int i = 0; i < json_object_array_length(array); i++) {
         json_object *entry = json_object_array_get_idx(array, i);
         const char *party, *content;
         char key[96];

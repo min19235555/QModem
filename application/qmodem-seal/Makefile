@@ -27,7 +27,7 @@ endef
 
 define Build/Compile
 	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_CPPFLAGS) \
-		-Wall -Wextra -Werror -o $(PKG_BUILD_DIR)/qmodem-seal \
+		-Wall -Wextra -Werror -Wno-error=sign-compare -o $(PKG_BUILD_DIR)/qmodem-seal \
 		$(PKG_BUILD_DIR)/qmodem-seal.c $(TARGET_LDFLAGS) -lsodium
 endef
 

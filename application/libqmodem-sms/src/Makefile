@@ -1,6 +1,6 @@
 CC ?= cc
 CFLAGS ?= -O2
-CFLAGS += -fPIC -Wall -Wextra -Werror -std=gnu99 -I.
+CFLAGS += -fPIC -Wall -Wextra -Werror -Wno-error=sign-compare -std=gnu99 -I.
 LDFLAGS ?=
 
 SONAME = libqmodem-sms.so.1

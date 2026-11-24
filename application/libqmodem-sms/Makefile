@@ -26,7 +26,7 @@ endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
-		CFLAGS="$(TARGET_CFLAGS) -fPIC -Wall -Wextra -Werror -std=gnu99 -I." \
+		CFLAGS="$(TARGET_CFLAGS) -fPIC -Wall -Wextra -Werror -Wno-error=sign-compare -std=gnu99 -I." \
 		LDFLAGS="$(TARGET_LDFLAGS)"
 endef
 

@@ -31,7 +31,7 @@ endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
-		CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include -Wall -Wextra -Werror -std=gnu11" \
+		CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include -Wall -Wextra -Werror -Wno-error=sign-compare -std=gnu11" \
 		LDFLAGS="$(TARGET_LDFLAGS) -lubus -lubox -lblobmsg_json -ljson-c -luci -lsqlite3 -lqmodem-sms"
 endef
 
