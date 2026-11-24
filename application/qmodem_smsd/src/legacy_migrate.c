@@ -97,7 +97,11 @@ static int migrate_file(sms_db_t *db, const char *path, const char *modem_id,
         goto out;
     if (exec_sql(db->sql, "BEGIN IMMEDIATE") != 0)
         goto out;
-    for (int i = 0; i < json_object_array_length(array); i++) {
+    /* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+     * json-c >= 0.13. Cast it explicitly so the same source builds against
+     * both the target library and the host library used by the unit tests. */
+    const size_t array_count = (size_t)json_object_array_length(array);
+    for (size_t i = 0; i < array_count; i++) {
         json_object *entry = json_object_array_get_idx(array, i);
         const char *party, *content;
         char key[96];

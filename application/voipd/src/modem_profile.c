@@ -139,7 +139,9 @@ int qmodem_voip_profile_load(struct qmodem_voip_modem_profile *profile,
 		json_object_put(root);
 		return -1;
 	}
-	count = json_object_array_length(modems);
+	/* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+	 * json-c >= 0.13; cast explicitly so both build cleanly. */
+	count = (size_t)json_object_array_length(modems);
 	for (size_t i = 0; i < count; i++) {
 		struct json_object *entry = json_object_array_get_idx(modems, i);
 		struct json_object *audio;

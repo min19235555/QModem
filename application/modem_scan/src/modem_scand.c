@@ -555,8 +555,10 @@ static int load_port_rule(const char *vid, const char *pid, struct port_rule *ru
 	snprintf(rule->voice_pcm_interface, sizeof(rule->voice_pcm_interface), "%s",
 		json_get_string_default(obj, "voice_pcm_interface", ""));
 	if (json_get_obj(obj, "include", &include) && json_object_is_type(include, json_type_array)) {
-		int n = json_object_array_length(include);
-		for (int i = 0; i < n; i++) {
+		/* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+		 * json-c >= 0.13; cast explicitly so both build cleanly. */
+		size_t n = (size_t)json_object_array_length(include);
+		for (size_t i = 0; i < n; i++) {
 			json_object *v = json_object_array_get_idx(include, i);
 			if (v)
 				sl_add(&rule->include, json_object_get_string(v));
@@ -978,8 +980,10 @@ static int load_profile(const char *slot_type, const char *name, struct modem_pr
 	snprintf(profile->nsa_band, sizeof(profile->nsa_band), "%s", json_get_string_default(obj, "nsa_band", ""));
 	snprintf(profile->sa_band, sizeof(profile->sa_band), "%s", json_get_string_default(obj, "sa_band", ""));
 	if (json_get_obj(obj, "modes", &modes) && json_object_is_type(modes, json_type_array)) {
-		int n = json_object_array_length(modes);
-		for (int i = 0; i < n; i++) {
+		/* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+		 * json-c >= 0.13; cast explicitly so both build cleanly. */
+		size_t n = (size_t)json_object_array_length(modes);
+		for (size_t i = 0; i < n; i++) {
 			json_object *v = json_object_array_get_idx(modes, i);
 			if (v)
 				sl_add(&profile->modes, json_object_get_string(v));

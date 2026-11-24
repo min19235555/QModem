@@ -139,7 +139,9 @@ int qmodem_voip_call_history_append(const char *path,
 		json_object_new_string(call->caller_id_withheld ? "" : call->number));
 	json_object_array_add(new_history, entry);
 	entry = NULL;
-	count = json_object_array_length(old_history);
+	/* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+	 * json-c >= 0.13; cast explicitly so both build cleanly. */
+	count = (size_t)json_object_array_length(old_history);
 	if (count >= QMODEM_VOIP_CALL_HISTORY_LIMIT)
 		count = QMODEM_VOIP_CALL_HISTORY_LIMIT - 1U;
 	for (i = 0; i < count; i++) {

@@ -467,7 +467,11 @@ static int sync_modem(const char *section, const char *trigger, int *imported,
                   !json_object_object_get_ex(root, "received", &messages)) ||
         !json_object_is_type(messages, json_type_array))
         goto out;
-    for (int i = 0; i < json_object_array_length(messages); i++) {
+    /* json_object_array_length() returns int in json-c <= 0.12 and size_t in
+     * json-c >= 0.13. Cast it explicitly so the same source builds against
+     * both the target library and the host library used by the unit tests. */
+    const size_t message_count = (size_t)json_object_array_length(messages);
+    for (size_t i = 0; i < message_count; i++) {
         struct json_object *entry = json_object_array_get_idx(messages, i);
         struct json_object *field;
         sms_segment_t segment = { .modem_id = section, .storage = cfg.storage,
