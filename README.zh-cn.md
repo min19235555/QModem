@@ -106,3 +106,13 @@ QModem 支持在设备上采集 AT fixture 和反馈包。开发者应优先提�
 ## 致谢
 
 QModem 使用或参考了 5G-Modem-Support、luci-app-4gmodem、sms_tool、gl-modem-at、sendat 和 qosmio/nss-packages 等社区项目。具体来源和许可证应以各目录中的文件及 Git 历史为准。
+
+## ONLY-RG200U slim build
+
+This branch is trimmed for the CPE1250S board:
+
+- Only Quectel RG200U-CN is kept in `modem_support.json` and `modem_port_rule.json`.
+- USB preset is ECM (`usb0`); PCIe scan and PCIe preset are disabled.
+- `ttyUSB2` (USB interface 4) is preferred as the AT management port;
+  set `qmodem.main.at_only_usb2=1` to force this behavior.
+- uqmi/umbim are not used; the SDK selects the `qmodem` and `luci-app-qmodem-next` packages.

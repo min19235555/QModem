@@ -1,0 +1,11 @@
+#!/bin/sh
+# ONLY-RG200U preset: ECM network port, AT only on ttyUSB2.
+uci -q set qmodem.main.enable_dial=1
+uci -q set qmodem.main.try_preset_usb=1
+uci -q set qmodem.main.try_preset_pcie=0
+uci -q set qmodem.main.enable_pcie_scan=0
+uci -q set qmodem.main.enable_usb_scan=1
+uci -q set qmodem.main.at_only_usb2=1
+uci -q commit qmodem
+rm -f "$0"
+exit 0

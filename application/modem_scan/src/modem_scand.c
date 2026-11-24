@@ -894,6 +894,9 @@ static void *probe_port_thread(void *arg)
 
 static void validate_ports(struct scan_result *res)
 {
+	/* ONLY-RG200U: keep AT management on ttyUSB2 when requested. */
+	char at_only_usb2[8] = "";
+	uci_get("qmodem.main.at_only_usb2", at_only_usb2, sizeof(at_only_usb2));
 	size_t n = res->at_ports.len;
 	pthread_t *threads = calloc(n, sizeof(*threads));
 	struct probe_ctx *ctx = calloc(n, sizeof(*ctx));
@@ -914,7 +917,8 @@ static void validate_ports(struct scan_result *res)
 			pthread_join(threads[i], NULL);
 			if (ctx[i].ok) {
 				sl_add(&res->valid_at_ports, res->at_ports.items[i]);
-				if (!res->preferred_at[0])
+				if (!res->preferred_at[0] ||
+				    (at_only_usb2[0] == '1' && strstr(res->at_ports.items[i], "ttyUSB2")))
 					snprintf(res->preferred_at, sizeof(res->preferred_at), "%s", res->at_ports.items[i]);
 			}
 		}
