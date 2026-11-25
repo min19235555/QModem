@@ -22,6 +22,12 @@ define Package/sim-switch/description
   Provides /usr/bin/simctl used by the LuCI web page.
 endef
 
+# This package ships scripts/config files only, with no source to compile.
+# Without an explicit empty Build/Compile, package.mk tries to run make in
+# an empty PKG_BUILD_DIR and fails with "No targets specified and no makefile found".
+define Build/Compile
+endef
+
 define Package/sim-switch/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) ./files/usr/bin/simctl $(1)/usr/bin/simctl
