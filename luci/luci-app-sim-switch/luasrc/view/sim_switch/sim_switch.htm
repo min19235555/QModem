@@ -30,7 +30,9 @@ function refresh() {
 function doSwitch(slot) {
 	var out = document.getElementById('sim-result');
 	out.textContent = 'Switching...';
-	XHR.post(SIM_ROOT + '/switch', { slot: slot }, function(x, data) {
+	/* This LuCI (18.06) exposes only a static XHR.get, not XHR.post.
+	   Use an XHR instance for the POST request. */
+	(new XHR()).post(SIM_ROOT + '/switch', { slot: slot }, function(x, data) {
 		if (data && data.ok) {
 			out.textContent = 'OK: ' + (data.data.message || 'switched to slot ' + slot);
 		} else {
