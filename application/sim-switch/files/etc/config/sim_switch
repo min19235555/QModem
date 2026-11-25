@@ -1,0 +1,3 @@
+config sim_switch 'main'
+	option active_slot '2'
+	option switch_type 'i2c'

@@ -1,0 +1,10 @@
+#!/bin/sh
+# One-shot default application for fresh installs / sysupgrade.
+uci -q get sim_switch.main >/dev/null || {
+	uci -q set sim_switch.main=sim_switch
+	uci -q set sim_switch.main.active_slot=2
+	uci -q set sim_switch.main.switch_type=i2c
+	uci -q commit sim_switch
+}
+rm -f "$0"
+exit 0

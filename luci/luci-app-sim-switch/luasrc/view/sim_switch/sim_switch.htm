@@ -1,0 +1,65 @@
+<%+header%>
+
+<script type="text/javascript">
+var SIM_ROOT = '<%=luci.dispatcher.build_url("admin", "modem", "sim_switch")%>';
+
+function simRequest(path, params, cb) {
+	params = params || {};
+	var qs = [];
+	for (var k in params) { qs.push(k + '=' + encodeURIComponent(params[k])); }
+	var url = SIM_ROOT + '/' + path + (qs.length ? '?' + qs.join('&') : '');
+	XHR.get(url, null, function(x, data) { cb(data); });
+}
+
+function refresh() {
+	simRequest('status', {}, function(data) {
+		var slot = (data && data.data) ? data.data.slot : 0;
+		var label = (data && data.data) ? data.data.label : 'Unknown';
+		document.getElementById('sim-current').innerHTML = '<b>' + slot + '</b> &nbsp; ' + label;
+		for (var i = 1; i <= 3; i++) {
+			var b = document.getElementById('sim-btn-' + i);
+			if (b) b.className = (i === slot) ? 'btn btn-primary active' : 'btn btn-default';
+		}
+	});
+	simRequest('gpio', {}, function(data) {
+		var el = document.getElementById('sim-gpio');
+		if (el && data && data.raw) el.textContent = data.raw;
+	});
+}
+
+function doSwitch(slot) {
+	var out = document.getElementById('sim-result');
+	out.textContent = 'Switching...';
+	XHR.post(SIM_ROOT + '/switch', { slot: slot }, function(x, data) {
+		if (data && data.ok) {
+			out.textContent = 'OK: ' + (data.data.message || 'switched to slot ' + slot);
+		} else {
+			out.textContent = 'ERROR: ' + ((data && data.error) || 'unknown');
+		}
+		refresh();
+	});
+}
+</script>
+
+<h2><%=luci.i18n.translate("SIM Slot Switch")%></h2>
+<p><%=luci.i18n.translate("Select the active SIM for the RG200U-CN modem. The GPIO switching matrix is applied immediately.")%></p>
+
+<fieldset class="cbi-section">
+	<legend><%=luci.i18n.translate("Current slot")%></legend>
+	<div id="sim-current" style="font-size:1.3em;margin:10px 0;">-</div>
+	<div style="margin:10px 0;">
+		<button class="btn btn-default" id="sim-btn-1" onclick="doSwitch(1)">1 - USIM</button>
+		<button class="btn btn-default" id="sim-btn-2" onclick="doSwitch(2)">2 - ESIM1</button>
+		<button class="btn btn-default" id="sim-btn-3" onclick="doSwitch(3)">3 - ESIM2</button>
+	</div>
+	<div id="sim-result" style="color:#444;margin:8px 0;"></div>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend><%=luci.i18n.translate("GPIO state")%></legend>
+	<pre id="sim-gpio" style="white-space:pre-wrap;">-</pre>
+</fieldset>
+
+<script type="text/javascript">refresh();</script>
+
+<%+footer%>
