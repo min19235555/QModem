@@ -44,11 +44,11 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/etc/init.d/sms_forwarder $(1)/etc/init.d/
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/etc/config/sms_daemon $(1)/etc/config/
+	$(INSTALL_CONF) ./files/etc/config/sms_forwarder $(1)/etc/config/
 endef
 
 define Package/$(PKG_NAME)/conffiles
-/etc/config/sms_daemon
+/etc/config/sms_forwarder
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

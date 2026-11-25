@@ -7,7 +7,7 @@ USE_PROCD=1
 PROG=/usr/bin/sms_forwarder
 
 start_service() {
-	config_load sms_daemon
+	config_load sms_forwarder
 	
 	local enabled
 	config_get_bool enabled sms_forward enable 0
@@ -283,5 +283,5 @@ generate_api_config() {
 }
 
 service_triggers() {
-	procd_add_reload_trigger "sms_daemon"
+	procd_add_reload_trigger "sms_forwarder"
 }

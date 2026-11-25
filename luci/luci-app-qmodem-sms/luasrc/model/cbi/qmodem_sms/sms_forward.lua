@@ -2,7 +2,7 @@ local uci = require "luci.model.uci".cursor()
 local dispatcher = require "luci.dispatcher"
 local fs = require "nixio.fs"
 
-m = Map("sms_daemon", translate("SMS Forward Configuration"))
+m = Map("sms_forwarder", translate("SMS Forward Configuration"))
 m.redirect = dispatcher.build_url("admin", "modem", "qmodem", "sms_forward")
 
 -- 添加说明信息

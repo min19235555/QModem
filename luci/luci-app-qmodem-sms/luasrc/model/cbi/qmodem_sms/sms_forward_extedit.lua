@@ -5,7 +5,7 @@ local json = require "luci.jsonc"
 
 
 
-m = Map("sms_daemon", translate("SMS Forward Advanced Configuration"))
+m = Map("sms_forwarder", translate("SMS Forward Advanced Configuration"))
 m.redirect = dispatcher.build_url("admin", "modem", "qmodem", "sms_forward")
 
 -- 添加说明信息
